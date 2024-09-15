@@ -36,6 +36,10 @@ C# hat von Haus aus eine Matrix Struct die jedoch 4x4 ist , deshalb muss a44 (M4
 
 Rotationsmatrixe habe ich von Wikipedia übernommen (https://en.wikipedia.org/wiki/Rotation_matrix)
 
+<div id="wiki" align="center">
+  <img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a6821937d5031de282a190f75312353c970aa2df" width="100"/>
+</div>
+
 Diese müssen vor der Projektion mit den Koordinatien des Objektes verrechnet werden. 
 
 Rotation Theta(θ) wird über einen Timer inkrementiert, damit eine bewegte Rotation gezeichnet werden kann.
