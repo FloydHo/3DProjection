@@ -4,6 +4,14 @@ using System.Numerics;
 using System.Xml;
 using Timer = System.Windows.Forms.Timer;
 
+/*
+ * ToDo: -Translation 
+ *       -Controls  
+ *    
+ */
+
+
+
 namespace _3DProjection
 {
     public partial class Projection3D : Form
@@ -14,12 +22,10 @@ namespace _3DProjection
         List<FaceVertices> cube = new List<FaceVertices>();
         Matrix4x4 proMat = new Matrix4x4();                     // Projection Matrix
 
-
-        float scale = 50;                  //The scaling of the objects
-        float fTheta = 0f;                  //Rotation Angle 
+        float scale = 50;                                       //The scaling of the objects             
+        float fTheta = 0f;                                      //Rotation Angle 
         Matrix4x4 rotY = new Matrix4x4();
         Matrix4x4 rotX = new Matrix4x4();
-
 
         Timer timer;
 
@@ -28,6 +34,17 @@ namespace _3DProjection
             InitializeComponent();
             InitializeNec();
 
+
+            timer = new System.Windows.Forms.Timer();
+            timer.Interval = 80;
+            timer.Tick += new EventHandler(OnTick);
+            timer.Start();
+        }
+
+        private void InitializeNec()
+        {
+            ox = 0.5f * canvas.Width;
+            oy = 0.5f * canvas.Height;
 
             //Adding all the Coordinates of the Faces of a normalized Cube
             cube.AddRange(new List<FaceVertices>
@@ -76,26 +93,9 @@ namespace _3DProjection
                 )
             });
 
-            //Rotate on Y Axis
-
+            //Init of the Proection Matrix
             proMat.M11 = 1;
             proMat.M22 = 1;
-            proMat.M33 = 1;
-            proMat.M44 = 1;
-
-
-
-            timer = new System.Windows.Forms.Timer();
-            timer.Interval = 80;
-            timer.Tick += new EventHandler(OnTick);
-            timer.Start();
-
-        }
-
-        private void InitializeNec()
-        {
-            ox = 0.5f * canvas.Width;
-            oy = 0.5f * canvas.Height;
         }
 
         private void OnTick(object sender, EventArgs e)
