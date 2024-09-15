@@ -15,7 +15,7 @@ namespace _3DProjection
         Matrix4x4 proMat = new Matrix4x4();                     // Projection Matrix
 
 
-        float scale = 100;                  //The scaling of the objects
+        float scale = 50;                  //The scaling of the objects
         float fTheta = 0f;                  //Rotation Angle 
         Matrix4x4 rotY = new Matrix4x4();
         Matrix4x4 rotX = new Matrix4x4();
@@ -124,23 +124,6 @@ namespace _3DProjection
             rotX.M44 = 1;
         }
 
-        public void DrawRectangle(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
-        {
-            updRotation();
-            using (Graphics g = canvas.CreateGraphics())
-            {
-                Pen pen = new Pen(Color.White, 1);
-
-
-                g.DrawLine(pen, new PointF(x1+ox, y1 + oy ), new PointF(x2 + ox , y2 + oy));
-                g.DrawLine(pen, new PointF(x1+ox, y1 + oy), new PointF(x3 + ox , y3 + oy));
-                g.DrawLine(pen, new PointF(x4+ox, y4 + oy), new PointF(x2 + ox , y2 + oy ));
-                g.DrawLine(pen, new PointF(x4 + ox, y4 + oy), new PointF(x3 + ox, y3 + oy ));
-
-                pen.Dispose();
-            }
-        }
-
         public void DrawCube()
         {
             foreach (var face in cube)
@@ -163,9 +146,25 @@ namespace _3DProjection
                 projFace.p[3] = MatrixVecMult(projFace.p[3], proMat);
 
 
-                DrawRectangle(projFace.p[0].x * scale, projFace.p[0].y * scale, projFace.p[1].x * scale, projFace.p[1].y * scale, projFace.p[2].x * scale, projFace.p[2].y * scale, projFace.p[3].x * scale, projFace.p[3].y * scale);
+                DrawRectangle(projFace.p[0].x, projFace.p[0].y, projFace.p[1].x, projFace.p[1].y, projFace.p[2].x, projFace.p[2].y, projFace.p[3].x, projFace.p[3].y);
             }
+        }
 
+        public void DrawRectangle(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4)
+        {
+            updRotation();
+            using (Graphics g = canvas.CreateGraphics())
+            {
+                Pen pen = new Pen(Color.White, 1);
+
+
+                g.DrawLine(pen, new PointF(x1 * scale + ox, y1 * scale + oy), new PointF(x2 * scale + ox, y2 * scale + oy));
+                g.DrawLine(pen, new PointF(x1 * scale + ox, y1 * scale + oy), new PointF(x3 * scale + ox, y3 * scale + oy));
+                g.DrawLine(pen, new PointF(x4 * scale + ox, y4 * scale + oy), new PointF(x2 * scale + ox, y2 * scale + oy));
+                g.DrawLine(pen, new PointF(x4 * scale + ox, y4 * scale + oy), new PointF(x3 * scale + ox, y3 * scale + oy));
+
+                pen.Dispose();
+            }
         }
 
         public Vec3D MatrixVecMult(Vec3D vi, Matrix4x4 matproj) //vi = Vector Input
